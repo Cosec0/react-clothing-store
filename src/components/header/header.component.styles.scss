@@ -21,5 +21,9 @@
         .option {
             padding: 10px 15px;
         }
+
+        .option:hover {
+            cursor: pointer;
+        }
     }
 }
