@@ -5,7 +5,7 @@ import './sign-in.styles.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import { signInWithGoogle } from '../../firebase/firebase.utils';
+import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 
 const SignIn = () => {
     const [signInState, setSignInState] = useState({
@@ -18,9 +18,24 @@ const SignIn = () => {
         setSignInState(prev => ({...prev, [name]: value}));
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        setSignInState({ email:'', password: '' });
+        const { email, password } = signInState;
+
+        try{
+            const user = await auth.signInWithEmailAndPassword(email, password);
+            console.log(user);
+            setSignInState({ email:'', password: '' });
+        }
+        catch(error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage);
+            if(errorCode === 'auth/wrong-password') {
+                alert('Invalid password or email. Try again');
+            }
+        }
+        
     }
 
 
@@ -50,7 +65,7 @@ const SignIn = () => {
 
                 <div className='buttons'>
                     <CustomButton type='submit'>SIGN IN</CustomButton>
-                    <CustomButton onClick={signInWithGoogle} isGoogleSignIn>SIGN IN WITH GOOGLE</CustomButton>
+                    <CustomButton type='button' onClick={signInWithGoogle} isGoogleSignIn>SIGN IN WITH GOOGLE</CustomButton>
                 </div>
             </form>
         </div>
