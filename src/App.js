@@ -7,9 +7,13 @@ import './App.css';
 
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
-import Header from './components/header/header.component';
+import Checkout from './pages/checkout/checkout.component';
 import SignInSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
+
+import Header from './components/header/header.component';
+
 import { setCurrentUser } from './redux/user/user.action';
+import { selectCurrentUser } from './redux/user/user.selector';
 
 const App = ({ setCurrentUser, currentUser }) => {
 
@@ -48,13 +52,14 @@ const App = ({ setCurrentUser, currentUser }) => {
           <Navigate replace to='/'/> :
           <SignInSignUpPage/>
         } />
+        <Route path='/checkout' element={<Checkout/>} />
       </Routes>
     </div>
   );
 }
 
 const mapStateToProps = (state) => ({
-  currentUser: state.users.currentUser
+  currentUser: selectCurrentUser(state)
 })
 
 const mapDispatchToProps = dispatch => ({
