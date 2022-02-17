@@ -10,6 +10,9 @@ import ShopPage from './pages/shop/shop.component';
 import Checkout from './pages/checkout/checkout.component';
 import SignInSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 
+import CollectionsOverview from './components/collections-overview/collections-overview.component';
+import CollectionPage from './pages/collection/collection.component';
+
 import Header from './components/header/header.component';
 
 import { setCurrentUser } from './redux/user/user.action';
@@ -45,7 +48,10 @@ const App = ({ setCurrentUser, currentUser }) => {
       <Header/>
       <Routes>
         <Route path='/' element={<HomePage/>} />
-        <Route path='/shop' element={<ShopPage/>} />
+        <Route path='/shop' element={<ShopPage/>} >
+          <Route path='/shop' element={<CollectionsOverview/>} />
+          <Route path='/shop/:collectionId' element={<CollectionPage/>} />
+        </Route>
         <Route path='/signIn' element={
           currentUser ? 
           <Navigate replace to='/'/> :
