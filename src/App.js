@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import './App.css';
 
@@ -17,8 +18,10 @@ import Header from './components/header/header.component';
 
 import { setCurrentUser } from './redux/user/user.action';
 import { selectCurrentUser } from './redux/user/user.selector';
+// import { selectShopCollectionsPreview } from './redux/shop/shop.selector';
+// import { createCollection } from './firebase/firebase.utils';
 
-const App = ({ setCurrentUser, currentUser }) => {
+const App = ({ setCurrentUser, currentUser/*, collections*/ }) => {
   // let unsubscribeFromAuth = null;
 
   useEffect(() => {
@@ -37,6 +40,8 @@ const App = ({ setCurrentUser, currentUser }) => {
         setCurrentUser(userAuth);
       }
     });
+
+    // createCollection('collections', collections.map(({ title, items }) => ({ title, items })));
 
     return () => {
       unsubscribeFromAuth();
@@ -63,8 +68,9 @@ const App = ({ setCurrentUser, currentUser }) => {
   );
 }
 
-const mapStateToProps = (state) => ({
-  currentUser: selectCurrentUser(state)
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  // collections: selectShopCollectionsPreview
 })
 
 const mapDispatchToProps = dispatch => ({

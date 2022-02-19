@@ -43,6 +43,17 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     return userRef;
 }
 
+export const createCollection = async (collectionKey, objectsToAdd) => {
+    const collectionRef = await firestore.collection(collectionKey);
+    const batch = firestore.batch();
+    objectsToAdd.forEach(obj => {
+        const newDocRef = collectionRef.doc();
+        batch.set(newDocRef, obj);
+    });
+
+    await batch.commit();
+}
+
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
