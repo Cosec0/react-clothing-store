@@ -3,12 +3,12 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCKthWFiMh0881rKL1Rz_bvoOe7PKckcZc",
-    authDomain: "clothing-store-db-3a60d.firebaseapp.com",
-    projectId: "clothing-store-db-3a60d",
-    storageBucket: "clothing-store-db-3a60d.appspot.com",
-    messagingSenderId: "98333527592",
-    appId: "1:98333527592:web:c1696ccc7bf27097646f1d"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
   
 const app = firebase.initializeApp(firebaseConfig);
