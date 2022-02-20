@@ -11,8 +11,8 @@ import ShopPage from './pages/shop/shop.component';
 import Checkout from './pages/checkout/checkout.component';
 import SignInSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 
-import CollectionsOverview from './components/collections-overview/collections-overview.component';
-import CollectionPage from './pages/collection/collection.component';
+import CollectionsOverviewContainer from './components/collections-overview/collection-overview.container';
+import CollectionPageContainer from './pages/collection/collection.container';
 
 import Header from './components/header/header.component';
 
@@ -54,8 +54,8 @@ const App = ({ setCurrentUser, currentUser/*, collections*/ }) => {
       <Routes>
         <Route path='/' element={<HomePage/>} />
         <Route path='/shop' element={<ShopPage/>} >
-          <Route path='/shop' element={<CollectionsOverview/>} />
-          <Route path='/shop/:collectionId' element={<CollectionPage/>} />
+          <Route path='/shop' element={<CollectionsOverviewContainer/>} />
+          <Route path='/shop/:collectionId' element={<CollectionPageContainer/>} />
         </Route>
         <Route path='/signIn' element={
           currentUser ? 

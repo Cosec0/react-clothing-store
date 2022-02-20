@@ -1,17 +1,11 @@
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect"; 
-import { useOutletContext } from "react-router-dom";
-
 import CollectionPreview from "../collection-preview/collection-preview.component";
-import { selectShopCollectionsPreview } from "../../redux/shop/shop.selector";
 import Spinner from '../../components/spinner/spinner.component';
 
 import './collections-overview.styles.scss';
 
-const CollectionsOverview = ({ collections }) => {
-    const isLoading = useOutletContext();
-    
+const CollectionsOverview = ({ collections, isLoading }) => {
     if(isLoading || !collections) return (<Spinner/>)
+
     return (
         <div className='collections-overview'>
             {
@@ -23,8 +17,4 @@ const CollectionsOverview = ({ collections }) => {
     );
 }
 
-const mapStateToProps = createStructuredSelector({
-    collections: selectShopCollectionsPreview
-})
-
-export default connect(mapStateToProps)(CollectionsOverview);
+export default CollectionsOverview;

@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { fetchCollectionsAsync } from '../../redux/shop/shop.actions';
-import { selectShopCollectionsFetchingStatus, selectShopCollectionsError } from '../../redux/shop/shop.selector';
+import { selectShopCollectionsError } from '../../redux/shop/shop.selector';
 
-const ShopPage = ({ fetchCollections, isFetching, errorMessage }) => {
-    // const [isLoading, setIsLoading] = useState(true);
+const ShopPage = ({ errorMessage }) => {
     
     useEffect(() => {
         fetchCollections();
-        // setIsLoading(false);
     }, []);
 
     if(errorMessage) {
@@ -30,7 +28,6 @@ const ShopPage = ({ fetchCollections, isFetching, errorMessage }) => {
 }
 
 const mapStateToProps = createStructuredSelector({
-    isFetching: selectShopCollectionsFetchingStatus,
     errorMessage: selectShopCollectionsError
 })
 
