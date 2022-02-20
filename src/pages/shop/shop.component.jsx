@@ -1,40 +1,41 @@
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
-import { firestore } from '../../firebase/firebase.utils';
-import { updateShopData } from '../../redux/shop/shop.actions';
+import { fetchCollectionsAsync } from '../../redux/shop/shop.actions';
+import { selectShopCollectionsFetchingStatus, selectShopCollectionsError } from '../../redux/shop/shop.selector';
 
-const ShopPage = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const dispatch = useDispatch();
+const ShopPage = ({ fetchCollections, isFetching, errorMessage }) => {
+    // const [isLoading, setIsLoading] = useState(true);
     
-    useEffect(async () => {
-        const collectionsRef = await firestore.collection('collections');
-        const collectionsObj = {};
-
-        await collectionsRef.get().then(async (snapshot) => {
-            for(let i = 0; i < snapshot.docs.length; i++) {
-                const { title, items } = snapshot.docs.at(i).data();
-
-                collectionsObj[title.toLowerCase()] = {
-                    routeName: encodeURI(title.toLowerCase()), 
-                    id: i + 1, 
-                    title, 
-                    items
-                }
-            }
-        });
-        
-        await dispatch(updateShopData(collectionsObj));
-        setIsLoading(false);
+    useEffect(() => {
+        fetchCollections();
+        // setIsLoading(false);
     }, []);
+
+    if(errorMessage) {
+        return (
+            <div className='shop-page'>
+                Could not load Shop data due to {errorMessage}. Try again later
+            </div>
+        );
+    }
 
     return (
         <div className='shop-page'>
-            <Outlet context={isLoading}/>
+            <Outlet context={isFetching}/>
         </div>
     );
 }
 
-export default ShopPage;
+const mapStateToProps = createStructuredSelector({
+    isFetching: selectShopCollectionsFetchingStatus,
+    errorMessage: selectShopCollectionsError
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    fetchCollections: () => dispatch(fetchCollectionsAsync())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);
