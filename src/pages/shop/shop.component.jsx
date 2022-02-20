@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { fetchCollectionsAsync } from '../../redux/shop/shop.actions';
 import { selectShopCollectionsError } from '../../redux/shop/shop.selector';
 
-const ShopPage = ({ errorMessage }) => {
+const ShopPage = ({ fetchCollections, errorMessage }) => {
     
     useEffect(() => {
         fetchCollections();
@@ -22,7 +22,7 @@ const ShopPage = ({ errorMessage }) => {
 
     return (
         <div className='shop-page'>
-            <Outlet context={isFetching}/>
+            <Outlet/>
         </div>
     );
 }
