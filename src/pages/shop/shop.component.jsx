@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { fetchCollectionsAsync } from '../../redux/shop/shop.actions';
+import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 import { selectShopCollectionsError } from '../../redux/shop/shop.selector';
 
 const ShopPage = ({ fetchCollections, errorMessage }) => {
@@ -32,7 +32,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchCollections: () => dispatch(fetchCollectionsAsync())
+    fetchCollections: () => dispatch(fetchCollectionsStart())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);

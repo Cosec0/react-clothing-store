@@ -6,21 +6,21 @@ import { firestore } from '../../firebase/firebase.utils';
 //     payload: collections
 // })
 
-export const fetchCollectionStart = () => ({
+export const fetchCollectionsStart = () => ({
     type: ShopActionTypes.FETCH_COLLECTIONS_START, 
 })
 
-export const fetchCollectionSuccess = (collection) => ({
+export const fetchCollectionsSuccess = (collection) => ({
     type: ShopActionTypes.FETCH_COLLECTIONS_SUCCESS, 
     payload: collection
 })
 
-export const fetchCollectionFailure = (errorMessage) => ({
+export const fetchCollectionsFailure = (errorMessage) => ({
     type: ShopActionTypes.FETCH_COLLECTIONS_FAILURE, 
     payload: errorMessage
 })
 
-const getCollectionsToObj = (collectionSnapshot) => {
+export const getCollectionsToObj = (collectionSnapshot) => {
     const collectionsObj = {};
 
     for(let i = 0; i < collectionSnapshot.docs.length; i++) {
@@ -40,15 +40,15 @@ const getCollectionsToObj = (collectionSnapshot) => {
 export const fetchCollectionsAsync = () => {
     return (dispatch) => {
         const collectionsRef = firestore.collection('collections');
-        dispatch(fetchCollectionStart());
+        dispatch(fetchCollectionsStart());
         let collectionsObj = {};
 
         collectionsRef.get().then(async (snapshot) => {
             collectionsObj = await getCollectionsToObj(snapshot);
-            dispatch(fetchCollectionSuccess(collectionsObj));
+            dispatch(fetchCollectionsSuccess(collectionsObj));
 
         }).catch(errorMessage => {
-            dispatch(fetchCollectionFailure(errorMessage));
+            dispatch(fetchCollectionsFailure(errorMessage));
             console.log(errorMessage);
         });
     }
