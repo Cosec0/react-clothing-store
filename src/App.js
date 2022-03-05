@@ -13,11 +13,13 @@ import CollectionsOverviewContainer from './components/collections-overview/coll
 import CollectionPageContainer from './pages/collection/collection.container';
 
 import Header from './components/header/header.component';
+import Spinner from './components/spinner/spinner.component';
+import ErrorBoundary from './components/error-boundary/error-boundary.component';
 
 import { selectCurrentUser } from './redux/user/user.selector';
 
 import { checkUserSession } from './redux/user/user.action';
-import Spinner from './components/spinner/spinner.component';
+
 
 const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
 const SignInSignUpPage = lazy(() => import('./pages/sign-in-and-sign-up/sign-in-and-sign-up.component'));
@@ -32,25 +34,27 @@ const App = ({ currentUser, checkUserSession }) => {
     <div>
       <GlobalStyle />
       <Header/>
-      <Routes>
-        <Route path='/' element={
-          <Suspense fallback={<Spinner/>}>
-            <HomePage/>
-          </Suspense>
-        } />
-        <Route path='/shop' element={<ShopPage/>} >
-          <Route path='/shop' element={<CollectionsOverviewContainer/>} />
-          <Route path='/shop/:collectionId' element={<CollectionPageContainer/>} />
-        </Route>
-        <Route path='/signIn' element={
-          currentUser ? 
-          <Navigate replace to='/'/> :
-          <Suspense fallback={<Spinner/>}>
-            <SignInSignUpPage/>
-          </Suspense>
-        } />
-        <Route path='/checkout' element={<Checkout/>} />
-      </Routes>
+      <ErrorBoundary>
+        <Routes>
+          <Route path='/' element={
+            <Suspense fallback={<Spinner/>}>
+              <HomePage/>
+            </Suspense>
+          } />
+          <Route path='/shop' element={<ShopPage/>} >
+            <Route path='/shop' element={<CollectionsOverviewContainer/>} />
+            <Route path='/shop/:collectionId' element={<CollectionPageContainer/>} />
+          </Route>
+          <Route path='/signIn' element={
+            currentUser ? 
+            <Navigate replace to='/'/> :
+            <Suspense fallback={<Spinner/>}>
+              <SignInSignUpPage/>
+            </Suspense>
+          } />
+          <Route path='/checkout' element={<Checkout/>} />
+        </Routes>
+      </ErrorBoundary>
     </div>
   );
 }
