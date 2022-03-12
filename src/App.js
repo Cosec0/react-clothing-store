@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import { GlobalStyle } from './global.styles';
 
 import ShopPage from './pages/shop/shop.component';
-import Checkout from './pages/checkout/checkout.component';
+// import Checkout from './pages/checkout/checkout.component';
 
 import CollectionsOverviewContainer from './components/collections-overview/collection-overview.container';
 import CollectionPageContainer from './pages/collection/collection.container';
@@ -23,6 +23,7 @@ import { checkUserSession } from './redux/user/user.action';
 
 const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
 const SignInSignUpPage = lazy(() => import('./pages/sign-in-and-sign-up/sign-in-and-sign-up.component'));
+const Checkout = lazy(() => import('./pages/checkout/checkout.component'))
 
 
 const App = ({ currentUser, checkUserSession }) => {
@@ -52,7 +53,11 @@ const App = ({ currentUser, checkUserSession }) => {
               <SignInSignUpPage/>
             </Suspense>
           } />
-          <Route path='/checkout' element={<Checkout/>} />
+          <Route path='/checkout' element={
+            <Suspense fallback={<Spinner/>}>
+              <Checkout/>
+            </Suspense>
+          } />
         </Routes>
       </ErrorBoundary>
     </div>

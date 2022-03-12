@@ -9,14 +9,28 @@ import {
     CartItemsContainer
 } from './cart-dropdown.styles';
 
-import CustomButton from '../custom-button/custom-button.component';
 import CartItem from '../cart-item/cart-item.component';
 import { selectCartItems } from '../../redux/cart/cart.selectors';
 import { useNavigate } from 'react-router-dom';
 import { toggleCartDropdown } from '../../redux/cart/cart.actions';
+import { selectCurrentUser } from '../../redux/user/user.selector';
 
-const CartDropdown = ({ cartItems, dispatch }) => {
+const CartDropdown = ({ cartItems, currentUser, dispatch }) => {
     const navigate = useNavigate();
+
+    if(!currentUser) {
+        return (
+            <CartDropdownContainer>
+                <CartItemsContainer>
+                    <EmptyMessageContainer>Sign in/Sign up to add to your cart</EmptyMessageContainer>
+                </CartItemsContainer>
+                <CartDropdownButton onClick={() => {
+                    navigate('/signin');
+                    dispatch(toggleCartDropdown());
+                }}>SIGN IN/SIGN UP</CartDropdownButton>
+            </CartDropdownContainer>
+        )
+    }
 
     return (
         <CartDropdownContainer>
@@ -36,7 +50,8 @@ const CartDropdown = ({ cartItems, dispatch }) => {
 }
 
 const mapStateToProps = createStructuredSelector({
-    cartItems: selectCartItems
+    cartItems: selectCartItems,
+    currentUser: selectCurrentUser
 })
 
 export default connect(mapStateToProps)(CartDropdown);

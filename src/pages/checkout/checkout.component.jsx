@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { useNavigate } from 'react-router-dom';
 
 import {
     CheckoutPageContainer,
@@ -13,8 +14,18 @@ import {
 import { selectCartItems, selectCartTotalCost } from '../../redux/cart/cart.selectors';
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
 import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component';
+import { selectCurrentUser } from '../../redux/user/user.selector';
 
-const Checkout = ({ cartItems, totalCost }) => {
+const Checkout = ({ cartItems, totalCost, currentUser }) => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(!currentUser) {
+            alert('Sign in/sign up for checkout');
+            navigate('/signin');
+        }
+    }, []);
+
     return (
         <CheckoutPageContainer>
             <CheckoutHeaderContainer>
@@ -55,7 +66,8 @@ const Checkout = ({ cartItems, totalCost }) => {
 
 const mapStateToProps = createStructuredSelector({
     cartItems: selectCartItems,
-    totalCost: selectCartTotalCost
+    totalCost: selectCartTotalCost,
+    currentUser: selectCurrentUser
 })
 
 export default connect(mapStateToProps)(Checkout);

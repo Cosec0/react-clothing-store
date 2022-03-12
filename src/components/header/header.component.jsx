@@ -7,7 +7,7 @@ import {
     LogoContainer,
     OptionsContainer,
     OptionLink
-} from './header..styles';
+} from './header.styles';
   
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
@@ -18,7 +18,7 @@ import { selectCurrentUser } from '../../redux/user/user.selector';
 import { selectCartHidden } from '../../redux/cart/cart.selectors';
 import { signOutStart } from '../../redux/user/user.action';
 
-const Header = ({ currentUser, cartIconHidden, signOutStart }) => {
+export const Header = ({ currentUser, cartIconHidden, signOutStart }) => {
     return (
         <HeaderContainer>
             <LogoContainer to='/'>
