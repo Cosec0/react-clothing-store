@@ -19,7 +19,7 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
     } catch (error) {
         yield put(signInFailure(error));
     }
-  }
+}
 
 
 /*~~~~ Sign In With Google Saga ~~~~*/
