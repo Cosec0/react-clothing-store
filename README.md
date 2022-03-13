@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Another Clothing React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple clothing store prototype made using React in front-end and Firebase for back-end. State management done using redux along with redux-saga. [Demo App](https://react-clothing-store.herokuapp.com/).
 
 ## Available Scripts
 
