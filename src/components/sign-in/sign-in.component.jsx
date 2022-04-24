@@ -14,8 +14,8 @@ import { googleSignInStart, emailSignInStart } from '../../redux/user/user.actio
 
 const SignIn = ({ googleSignInStart, emailSignInStart }) => {
     const [signInState, setSignInState] = useState({
-        email: '',
-        password: ''
+        email: 'test@mail.com',
+        password: 'password'
     })
 
     const handleChange = (event) => {
@@ -34,6 +34,7 @@ const SignIn = ({ googleSignInStart, emailSignInStart }) => {
         <SignInContainer>
             <SignInTitle>I already have an account</SignInTitle>
             <span>Sign in with your email and password</span>
+            <span>(For checking out the site use email as <b>test@mail.com</b> and password as <b>password</b>)</span>
 
             <form onSubmit={handleSubmit}>
                 <FormInput 
